@@ -54,7 +54,7 @@ def predict_audio_clips(model_path, video_path):
 
     results_df = pd.DataFrame(prediction_results)
     results_df.to_csv('predictions.csv', index=False)
-    shutil.rmtree(clips_output_dir)
+    #shutil.rmtree(clips_output_dir)
 
 if __name__ == '__main__':
     import sys
