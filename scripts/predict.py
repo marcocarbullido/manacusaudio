@@ -8,7 +8,7 @@ import shutil
 import numpy as np
 import pandas as pd
 import tensorflow as tf
-from audio_processing.spectrogram.py import spect
+from audio_processing.spectrogram import spect
 from audio_processing.extract_clips import extract_audio_clips
 
 
