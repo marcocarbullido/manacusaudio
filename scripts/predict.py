@@ -22,9 +22,9 @@ def predict_audio_clips(model_path, video_path):
     extract_audio_clips(video_path, clips_output_dir)
 
     audio_clips = [os.path.join(clips_output_dir, f) for f in os.listdir(clips_output_dir) if f.endswith('.wav')]
-    index_to_label_map = {0: 'c', 1: 'w', 2: 'g', 3: 'n', 4: 's'}
+    label_map = {0: 'c', 1: 'w', 2: 'g', 3: 'n', 4: 's'}
 
-    prediction_results = []
+    log = []
 
     for audio_clip in audio_clips:
         try:
@@ -34,25 +34,24 @@ def predict_audio_clips(model_path, video_path):
             spectrogram = np.squeeze(spectrogram, axis=-1)
 
             predictions = model.predict(spectrogram)
-            predicted_probabilities = predictions[0]
-            predicted_labels = [index_to_label_map[idx] for idx in range(len(predicted_probabilities))]
-            max_prob_index = np.argmax(predicted_probabilities)
+            probabilities = predictions[0]
+            predicted_labels = [label_map[idx] for idx in range(len(probabilities))]
+            max_prob_index = np.argmax(probabilities)
             max_prob_label = predicted_labels[max_prob_index]
 
             prediction_result = {
                 'path': audio_clip,
                 'max_label': max_prob_label
             }
-            for idx, prob in enumerate(predicted_probabilities):
-                prediction_result[index_to_label_map[idx]] = prob
-
-            prediction_results.append(prediction_result)
+            for idx, prob in enumerate(probabilities):
+                prediction_result[label_map[idx]] = prob
+            log.append(prediction_result)
             
         except Exception as e:
             print(f"Error processing {audio_clip}: {e}")
             continue
 
-    results_df = pd.DataFrame(prediction_results)
+    results_df = pd.DataFrame(log)
     results_df.to_csv('predictions.csv', index=False)
     #shutil.rmtree(clips_output_dir)
 
