@@ -35,9 +35,9 @@ manacusaudio/
 
 ## Usage
 
-1. Place your trained Keras model in the `models` directory and name it `audiomodel_88_85.keras`.
+1. Find a Keras model in the `models` directory named `audiomodel_88_85.keras`.
 
-2. Run the prediction script with your video file path and model path:
+2. Run the prediction script with the paths to the model path and your video file:
     ```sh
     python scripts/predict.py models/audiomodel_88_85.keras path/to/your/video.mp4
     ```
