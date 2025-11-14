@@ -1,5 +1,5 @@
 import os
-from moviepy.editor import VideoFileClip
+from moviepy.video.io.VideoFileClip import VideoFileClip
 
 def extract_audio_clips(video_path, output_dir, clip_duration=0.5):
     try:
@@ -15,7 +15,7 @@ def extract_audio_clips(video_path, output_dir, clip_duration=0.5):
         while i < audio_clip_duration:
             start_time = i
             end_time = i + clip_duration
-            subclip = audio_clip.subclip(start_time, end_time)
+            subclip = audio_clip.subclipped(start_time, end_time)
 
             clip_filename = f"{os.path.basename(video_path).split('.')[0]}_{int(i*2):04d}.wav"
             clip_filepath = os.path.join(output_dir, clip_filename)
